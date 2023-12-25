@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from './app/hooks';
+import { fetchContacts } from './thunk/contactThunks.ts';
+import './App.css';
+import { Link } from 'react-router-dom';
+import ContactCard from './components/ContactCard';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const contacts = useAppSelector((state) => state.contacts.contacts);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    useEffect(() => {
+        dispatch(fetchContacts());
+        console.log('Contacts:', contacts);
+    }, [dispatch]);
 
-export default App
+    return (
+        <div>
+            <h1>Contacts</h1>
+            <Link to="/add">Add new contact</Link>
+
+            <div className="contact-list">
+                {contacts ? (
+                    contacts.map((contact) => (
+                        <ContactCard key={contact.id} contact={contact} />
+                    ))
+                ) : (
+                    <p>Loading contacts...</p>
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default App;
