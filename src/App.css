@@ -40,3 +40,25 @@
 .read-the-docs {
   color: #888;
 }
+
+.contact-card {
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contact-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.contact-card h2 {
+  margin-bottom: 8px;
+}
+
+.contact-card p {
+  margin: 8px 0;
+}
